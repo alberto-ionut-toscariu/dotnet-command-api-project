@@ -1,10 +1,12 @@
+using Commander.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddScoped<ICommanderRepo, MockCommanderRepo>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -13,7 +15,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
