@@ -83,5 +83,18 @@ namespace Commander.Controllers
 
             return NoContent();
         }
+        [HttpDelete("{id}", Name = "DeleteCommandPatch")]
+        public ActionResult<CommandReadDto> DeleteCommand(int id)
+        {
+            var commandModelFromRepo = _repository.GetCommandById(id);
+            if (commandModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _repository.DeleteCommand(commandModelFromRepo);
+            _repository.SaveChanges();
+            return Ok(_mapper.Map<CommandReadDto>(commandModelFromRepo));
+        }
     }
 }
