@@ -1,12 +1,16 @@
 using Commander.Data;
 using Microsoft.EntityFrameworkCore;
-
+using Newtonsoft.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(s =>
+{
+    s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+});
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 //builder.Services.AddScoped<ICommanderRepo, MockCommanderRepo>();
 builder.Services.AddScoped<ICommanderRepo, SQLCommanderRepo>();
